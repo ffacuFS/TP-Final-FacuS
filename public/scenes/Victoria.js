@@ -1,26 +1,15 @@
 export default class Victoria extends Phaser.Scene {
-  constructor() {
-    // key of the scene
-    // the key will be used to start the scene by other scenes
-    super("victoria");
+  constructor(){
+      super("victoria")
   }
+  preload(){
+    this.load.image("win","./public/images/victoria.jpg")
 
-  init() {
-    // this is called before the scene is created
-    // init variables
-    // take data passed from other scenes
-    // data object param {}
   }
-
-  preload() {
-    // load assets
-  }
-
-  create() {
-    // create game objects
-  }
-
-  update() {
-    // update game objects
+  create(){
+      this.add.image(400, 300,"win")
+          .setScale(2.5)
+          .setInteractive()
+          .on('pointerdown', () => this.scene.start('menuprincipal')); ;
   }
 }

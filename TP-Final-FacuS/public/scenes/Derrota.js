@@ -3,7 +3,7 @@ export default class Derrota extends Phaser.Scene {
       super("derrota")
   }
   preload(){
-    this.load.image("derrota","./public/images/derrota.jpg")
+    this.load.image("derrota","./public/images/derrota.jpg");
   }
   create(){
       this.add.image(400, 300,"derrota")
