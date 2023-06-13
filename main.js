@@ -31,7 +31,7 @@ const config = {
   // List of scenes to load
   // Only the first scene will be shown
   // Remember to import the scene before adding it to the list
-  scene: [Preload,MenuPrincipal,Escena1, Escena2,Victoria,Derrota],
+  scene: [Preload, MenuPrincipal, Escena1, Escena2, Victoria, Derrota],
 };
 
 // Create a new Phaser game instance
