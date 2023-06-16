@@ -29,9 +29,6 @@ export default class Escena1 extends Phaser.Scene {
     this.add.image("meteorito");
     this.add.image("estrella");
 
-    this.laserGroup = this.add.group();
-    //this.laserGroup.setVelocity(0, -500);
-
     this.shapesGroup = this.physics.add.group();
 
     this.jugador = this.physics.add
@@ -47,7 +44,16 @@ export default class Escena1 extends Phaser.Scene {
       this.collectShape
     );
 
-    this.physics.add.collider(this.shapesGroup, this.jugador, this.choca);
+    this.physics.add.collider(
+      this.shapesGroup,
+      this.jugador,
+      this.handleCollision,
+      null,
+      this
+    );
+
+    // Falta agregar colision del jugador con el mundo
+    // Le resta una vida ??
 
     this.time.addEvent({
       delay: 2500,
@@ -95,16 +101,10 @@ export default class Escena1 extends Phaser.Scene {
     );
   }
 
-  choca(shape, jugador) {
-    //shape.disableBody = false
-    console.log("chaca persobaje");
-  }
-
   update() {
-    if (this.scoreM > 2) {
-      this.scene.start("win");
-    } else if (this.scoreE > 2) {
-      this.scene.start("win");
+    // si los dos marcadores son mayores a 2, se gana el juego
+    if (this.scoreM >= 2 && this.scoreE >= 2) {
+      this.scene.start("victoria");
     }
 
     if (this.defeat) {
@@ -173,8 +173,8 @@ export default class Escena1 extends Phaser.Scene {
 
   collectShape(laser, shape) {
     console.log("colecta forma");
-    shape.disableBody(true, true);
-    laser.disableBody(true, true);
+    shape.destroy();
+    laser.destroy();
 
     if (shape.texture.key === "meteorito") {
       this.scoreM++;
@@ -189,6 +189,7 @@ export default class Escena1 extends Phaser.Scene {
     this.scoreTextM.setText(`M: ${this.scoreM}`);
     this.scoreTextE.setText(`E: ${this.scoreE}`);
   }
+
   handleCollision(jugador, shape) {
     shape.destroy();
     this.vidas--;
