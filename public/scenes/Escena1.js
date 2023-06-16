@@ -29,8 +29,8 @@ export default class Escena1 extends Phaser.Scene {
     this.add.image("meteorito");
     this.add.image("estrella");
 
-    this.laserGroup = this.physics.add.group();
-    this.laserGroup.setVelocity(0, -500);
+    this.laserGroup = this.add.group();
+    //this.laserGroup.setVelocity(0, -500);
 
     this.shapesGroup = this.physics.add.group();
 
@@ -157,23 +157,31 @@ export default class Escena1 extends Phaser.Scene {
     laser.setScale(0.02);
     laser.setVelocityY(-500);
 
-    this.laserGroup.add(laser);
+    laser.setCollideWorldBounds(true);
+
+    // Configurar colisiones
+    this.physics.add.collider(
+      laser,
+      this.shapesGroup,
+      this.collectShape,
+      null,
+      this
+    );
+
+    // agregar colisiones a los bordes para eliminar el laser
   }
 
   collectShape(laser, shape) {
     console.log("colecta forma");
-    // Elimina el láser y el sprite recolectado
-    laser.destroy();
-    shape.destroy();
+    shape.disableBody(true, true);
+    laser.disableBody(true, true);
 
-    // Actualiza el puntaje dependiendo del tipo de sprite recolectado
     if (shape.texture.key === "meteorito") {
-      this.scoreM += 10;
-    } else if (shape.texture.key === "estrella") {
-      this.scoreE += 5;
+      this.scoreM++;
     }
-
-    // Actualiza el texto del puntaje
+    if (shape.texture.key === "estrella") {
+      this.scoreE++;
+    }
     this.updateScoreText();
   }
 
