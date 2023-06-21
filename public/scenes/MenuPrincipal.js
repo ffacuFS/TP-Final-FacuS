@@ -21,7 +21,7 @@ export default class MenuPrincipal extends Phaser.Scene {
     menuImage.setInteractive(); // Enables input interaction on the image
 
     menuImage.on('pointerdown', () => {
-      this.scene.start('escena2'); // Starts the 'escena1' scene when the image is clicked
+      this.scene.start('escena1'); // Starts the 'escena1' scene when the image is clicked
     });
 
     this.add.text(180, 400, "¡¡Click en la pantalla para comenzar!!", {

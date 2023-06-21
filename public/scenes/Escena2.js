@@ -105,6 +105,12 @@ export default class Escena2 extends Phaser.Scene {
     this.fireButton = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
+
+    this.input.keyboard.on("keydown-ESC", () => {
+      this.scene.resume(this.sceneToResume);
+      this.scene.pause("escena2");
+      this.scene.launch("pausa");
+    });
   }
 
   update() {
@@ -119,6 +125,7 @@ export default class Escena2 extends Phaser.Scene {
     if (this.defeat ) {
       this.scene.start("derrota");
     }
+    
     // update game objects
     if (this.cursors.left.isDown) {
       this.jugador.setVelocityX(-200);
@@ -135,6 +142,7 @@ export default class Escena2 extends Phaser.Scene {
       this.shoot();
     }
   }
+
 
   addShape() {
     const randomShape = Phaser.Math.RND.pick(["meteorito", "estrella","satelite"]);

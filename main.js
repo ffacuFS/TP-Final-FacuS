@@ -4,6 +4,7 @@ import Escena2 from "./public/scenes/Escena2.js";
 import MenuPrincipal from "./public/scenes/MenuPrincipal.js";
 import Victoria from "./public/scenes/Victoria.js";
 import Preload from "./public/scenes/Preload.js";
+import Pausa from "./public/scenes/Pausa.js";
 // Create a new Phaser config object
 const config = {
   type: Phaser.AUTO,
@@ -31,7 +32,7 @@ const config = {
   // List of scenes to load
   // Only the first scene will be shown
   // Remember to import the scene before adding it to the list
-  scene: [Preload, MenuPrincipal, Escena1, Escena2, Victoria, Derrota],
+  scene: [Preload, MenuPrincipal, Escena1, Escena2, Victoria, Derrota,Pausa],
 };
 
 // Create a new Phaser game instance

@@ -5,7 +5,6 @@ export default class Escena1 extends Phaser.Scene {
     super("escena1");
     this.vidas = 3;
   }
-
   init() {
     // this is called before the scene is created
     // init variables
@@ -21,6 +20,7 @@ export default class Escena1 extends Phaser.Scene {
     this.load.image("meteorito", "./public/images/Meteorito.png");
     this.load.image("estrella", "./public/images/estrella.png");
     this.load.image("laser", "./public/images/laser.png");
+    this.load.image("pantpausa","./public/images/pantallapausa.png");
   }
 
   create() {
@@ -73,7 +73,7 @@ export default class Escena1 extends Phaser.Scene {
       fill: "#FFFFFF",
     });
 
-    this.timer = 15;
+    this.timer = 30;
     this.timerText = this.add.text(750, 20, this.timer, {
       fontSize: "32px",
       fontStyle: "bold",
@@ -97,6 +97,12 @@ export default class Escena1 extends Phaser.Scene {
     this.fireButton = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
+
+    this.input.keyboard.on("keydown-ESC", () => {
+      this.scene.pause("escena1");
+      this.scene.launch("pausa");
+    });
+
   }
 
   update() {
@@ -108,6 +114,7 @@ export default class Escena1 extends Phaser.Scene {
     if (this.defeat) {
       this.scene.start("derrota");
     }
+    
     // update game objects
     if (this.cursors.left.isDown) {
       this.jugador.setVelocityX(-200);
