@@ -10,6 +10,6 @@ export default class Victoria extends Phaser.Scene {
       this.add.image(400, 300,"win")
           .setScale(2.5)
           .setInteractive()
-          .on('pointerdown', () => this.scene.start('menuprincipal')); ;
+          .on('pointerdown', () => this.scene.start('escena2')); ;
   }
 }

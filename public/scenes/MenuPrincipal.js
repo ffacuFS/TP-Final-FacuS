@@ -1,41 +1,41 @@
 export default class MenuPrincipal extends Phaser.Scene {
   constructor() {
-    // key of the scene
-    // the key will be used to start the scene by other scenes
-    super("menuprincipal");
+    super("menuprincipal"); // Sets the key of the scene
   }
 
   init() {
-    // this is called before the scene is created
-    // init variables
-    // take data passed from other scenes
-    // data object param {}
+    // Initialization method, called before the scene is created
+    // You can initialize variables and access data passed from other scenes
   }
 
   preload() {
-    // load assets
-    this.load.image("btnjugar", "./public/images/jugar.png");
+    // Preload method, used to load game assets
+    this.load.image("btnjugar", "./public/images/jugar.png"); // Loads an image asset with the key "btnjugar"
+    this.load.image("menu", "./public/images/MenuPRINCIPAL.jpg");
+    this.load.image("logo","./public/images/logo.png") // Loads an image asset with the key "menu"
   }
 
   create() {
-    // create game objects
-    const btnjugar = this.add
-      .image(400, 300, "btnjugar")
-      .setScale(0.5)
-      .setInteractive();
+    // Create method, called when the scene is created
+    const menuImage = this.add.image(400, 300, "menu");
+    menuImage.setInteractive(); // Enables input interaction on the image
 
-    btnjugar.on("pointerover", () => {
-      this.game.canvas.style.cursor = "pointer";
+    menuImage.on('pointerdown', () => {
+      this.scene.start('escena2'); // Starts the 'escena1' scene when the image is clicked
     });
-    btnjugar.on("pointerout", () => {
-      this.game.canvas.style.cursor = "default";
+
+    this.add.text(180, 400, "¡¡Click en la pantalla para comenzar!!", {
+      fontSize: "20px",
+      fontStyle: "bold",
+      fill: "#FFFFFF"
     });
-    btnjugar.on("pointerdown", () => {
-      this.scene.start("escena1");
-    });
+    this.add.image(390,200,"logo").setScale();
+    
+    // Adds text to the scene at position (200, 300) with the specified style
   }
 
   update() {
-    // update game objects
+    // Update method, called in the game loop for continuous updates
+    // You can update game objects and perform logic here
   }
 }

@@ -16,16 +16,16 @@ export default class Escena1 extends Phaser.Scene {
 
   preload() {
     // load assets
-    this.load.image("espacio", "./public/images/espacio.jpg");
-    this.load.image("nave", "./public/images/nave.jpg");
-    this.load.image("meteorito", "./public/images/meteorito.jpg");
+    this.load.image("escena1", "./public/images/escena1.jpg");
+    this.load.image("nave", "./public/images/nave.png");
+    this.load.image("meteorito", "./public/images/Meteorito.png");
     this.load.image("estrella", "./public/images/estrella.png");
     this.load.image("laser", "./public/images/laser.png");
   }
 
   create() {
     // create game objects
-    this.add.image(400, 300, "espacio");
+    this.add.image(400, 300, "escena1");
     this.add.image("meteorito");
     this.add.image("estrella");
 
@@ -33,8 +33,6 @@ export default class Escena1 extends Phaser.Scene {
 
     this.jugador = this.physics.add
       .sprite(500, 400, "nave")
-      .setScale(0.3)
-      .refreshBody();
     this.jugador.setBounce(0.1);
     this.jugador.setCollideWorldBounds(false);
 
@@ -56,7 +54,7 @@ export default class Escena1 extends Phaser.Scene {
     // Le resta una vida ??
 
     this.time.addEvent({
-      delay: 2500,
+      delay: 2000,
       callback: this.addShape,
       callbackScope: this,
       loop: true,
@@ -131,7 +129,7 @@ export default class Escena1 extends Phaser.Scene {
     const randomShape = Phaser.Math.RND.pick(["meteorito", "estrella"]);
     const randomX = Phaser.Math.Between(0, 800);
 
-    const shape = this.physics.add.image(randomX, 0, randomShape).setScale(0.3);
+    const shape = this.physics.add.image(randomX, 0, randomShape).setScale(1.5);
     shape.setCollideWorldBounds(true);
     shape.body.setAllowGravity(false);
     this.shapesGroup.add(shape);
@@ -154,11 +152,17 @@ export default class Escena1 extends Phaser.Scene {
       this.jugador.y,
       "laser"
     );
-    laser.setScale(0.02);
-    laser.setVelocityY(-500);
+    laser.setScale(0.5);
+    laser.setVelocityY(-600);
 
     laser.setCollideWorldBounds(true);
 
+    laser.body.onWorldBounds = true;
+    this.physics.world.on("worldbounds", (body) => {
+      if (body.gameObject === laser) {
+        laser.destroy(); // Remove the laser when it collides with the world boundaries
+      }
+    }, this);
     // Configurar colisiones
     this.physics.add.collider(
       laser,

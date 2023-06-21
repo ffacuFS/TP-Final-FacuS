@@ -8,6 +8,8 @@ export default class HelloWorldScene extends Phaser.Scene {
   }
 
   init() {
+    
+
     // this is called before the scene is created
     // init variables
     // take data passed from other scenes
