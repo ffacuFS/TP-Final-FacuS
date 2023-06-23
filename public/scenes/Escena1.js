@@ -15,7 +15,7 @@ export default class Escena1 extends Phaser.Scene {
 
   preload() {
     // load assets
-    this.load.image("escena1", "./public/images/escena1.jpg");
+    this.load.image("escena1", "./public/images/escena3.jpg");
     this.load.image("nave", "./public/images/nave.png");
     this.load.image("meteorito", "./public/images/Meteorito.png");
     this.load.image("estrella", "./public/images/estrella.png");

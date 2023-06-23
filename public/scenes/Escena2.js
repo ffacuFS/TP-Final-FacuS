@@ -107,9 +107,8 @@ export default class Escena2 extends Phaser.Scene {
     );
 
     this.input.keyboard.on("keydown-ESC", () => {
-      this.scene.resume(this.sceneToResume);
       this.scene.pause("escena2");
-      this.scene.launch("pausa");
+      this.scene.launch('PantallaPausa', { sceneToResume: 'Escena2' });
     });
   }
 
