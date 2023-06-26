@@ -69,33 +69,33 @@ export default class Escena2 extends Phaser.Scene {
       loop: true,
     });
 
-    this.vidasText = this.add.text(20, 80, `Vidas: ${this.vidas}`, {
+    this.vidasText = this.add.text(20, 120, `❤️: ${this.vidas}/3`, {
       fontSize: "24px",
       fontStyle: "bold",
       fill: "#FFFFFF",
     });
 
     this.timer = 35;
-    this.timerText = this.add.text(750, 20, this.timer, {
+    this.timerText = this.add.text(380, 20, this.timer, {
       fontSize: "32px",
       fontStyle: "bold",
       fill: "#FFFFFF",
     });
 
     this.scoreM = 0;
-    this.scoreTextM = this.add.text(20, 20, `M: ${this.scoreM}`, {
+    this.scoreTextM = this.add.text(20, 20, `🌑: ${this.scoreM}/2`, {
       fontSize: "24px",
       fontStyle: "bold",
       fill: "#FFFFFF",
     });
     this.scoreE = 0;
-    this.scoreTextE = this.add.text(20, 50, `E: ${this.scoreE}`, {
+    this.scoreTextE = this.add.text(20, 50, `⭐: ${this.scoreE}/2`, {
       fontSize: "24px",
       fontStyle: "bold",
       fill: "#FFFFFF",
     });
     this.scoreS = 0;
-    this.scoreTextS = this.add.text(10, 10, `E: ${this.scoreS}`, {
+    this.scoreTextS = this.add.text(20, 80, `🛰️: ${this.scoreS}/3`, {
       fontSize: "24px",
       fontStyle: "bold",
       fill: "#FFFFFF",
@@ -115,7 +115,7 @@ export default class Escena2 extends Phaser.Scene {
   update() {
     // si los dos marcadores son mayores a 2, se gana el juego
     if (this.scoreM >= 2 && this.scoreE >= 2) {
-      this.scene.start("victoria");
+      this.scene.start("fin");
     }
     if (this.scoreS === 3){
       this.scene.start("derrota");
@@ -211,9 +211,9 @@ export default class Escena2 extends Phaser.Scene {
   }
 
   updateScoreText() {
-    this.scoreTextM.setText(`M: ${this.scoreM}`);
-    this.scoreTextE.setText(`E: ${this.scoreE}`);
-    this.scoreTextS.setText(`S: ${this.scoreS}`);
+    this.scoreTextM.setText(`🌑: ${this.scoreM}/2`);
+    this.scoreTextE.setText(`⭐: ${this.scoreE}/2`);
+    this.scoreTextS.setText(`🛰️: ${this.scoreS}/3`);
   }
 
   handleCollision(jugador, shape) {
@@ -221,7 +221,7 @@ export default class Escena2 extends Phaser.Scene {
     this.vidas--;
 
     // Actualizar el texto de las vidas
-    this.vidasText.setText(`Vidas: ${this.vidas}`);
+    this.vidasText.setText(`❤️: ${this.vidas}/3`);
 
     if (this.vidas <= 0) {
       // Si se quedan sin vidas, puedes hacer algo aquí, como llamar a una función de Game Over.
@@ -233,7 +233,7 @@ export default class Escena2 extends Phaser.Scene {
   gameOver() {
     // Aquí puedes realizar acciones cuando el jugador pierda todas las vidas.
     // Puedes reiniciar el juego, mostrar un mensaje de game over, etc.
-    this.scene.start("derrota"); // Por ejemplo, iniciar la escena de derrota.
+    this.scene.start("derrota") // Por ejemplo, iniciar la escena de derrota.
   }
 }
 

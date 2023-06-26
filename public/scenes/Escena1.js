@@ -33,8 +33,9 @@ export default class Escena1 extends Phaser.Scene {
 
     this.jugador = this.physics.add
       .sprite(500, 400, "nave")
-    this.jugador.setBounce(0.1);
-    this.jugador.setCollideWorldBounds(false);
+    this.jugador.setBounce(0);
+    this.jugador.setCollideWorldBounds(true);
+    
 
     this.physics.add.collider(
       this.shapesGroup,
@@ -49,6 +50,7 @@ export default class Escena1 extends Phaser.Scene {
       null,
       this
     );
+
 
     // Falta agregar colision del jugador con el mundo
     // Le resta una vida ??
@@ -67,27 +69,27 @@ export default class Escena1 extends Phaser.Scene {
       loop: true,
     });
 
-    this.vidasText = this.add.text(20, 80, `Vidas: ${this.vidas}`, {
+    this.vidasText = this.add.text(20, 120, `❤️: ${this.vidas}/3`, {
       fontSize: "24px",
       fontStyle: "bold",
       fill: "#FFFFFF",
     });
 
     this.timer = 30;
-    this.timerText = this.add.text(750, 20, this.timer, {
+    this.timerText = this.add.text(380, 20, this.timer, {
       fontSize: "32px",
       fontStyle: "bold",
       fill: "#FFFFFF",
     });
 
     this.scoreM = 0;
-    this.scoreTextM = this.add.text(20, 20, `M: ${this.scoreM}`, {
+    this.scoreTextM = this.add.text(20, 20, `🌑: ${this.scoreM}/2`, {
       fontSize: "24px",
       fontStyle: "bold",
       fill: "#FFFFFF",
     });
     this.scoreE = 0;
-    this.scoreTextE = this.add.text(20, 50, `E: ${this.scoreE}`, {
+    this.scoreTextE = this.add.text(20, 50, `⭐: ${this.scoreE}/2`, {
       fontSize: "24px",
       fontStyle: "bold",
       fill: "#FFFFFF",
@@ -197,8 +199,8 @@ export default class Escena1 extends Phaser.Scene {
   }
 
   updateScoreText() {
-    this.scoreTextM.setText(`M: ${this.scoreM}`);
-    this.scoreTextE.setText(`E: ${this.scoreE}`);
+    this.scoreTextM.setText(`🌑: ${this.scoreM}/2`);
+    this.scoreTextE.setText(`⭐: ${this.scoreE}/2`);
   }
 
   handleCollision(jugador, shape) {
@@ -206,7 +208,7 @@ export default class Escena1 extends Phaser.Scene {
     this.vidas--;
 
     // Actualizar el texto de las vidas
-    this.vidasText.setText(`Vidas: ${this.vidas}`);
+    this.vidasText.setText(`❤️: ${this.vidas}/3`);
 
     if (this.vidas <= 0) {
       // Si se quedan sin vidas, puedes hacer algo aquí, como llamar a una función de Game Over.
