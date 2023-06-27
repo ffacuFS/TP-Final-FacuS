@@ -108,7 +108,7 @@ export default class Escena2 extends Phaser.Scene {
       fill: "#FFFFFF",
     });
 
-    this.timer = 40;
+    this.timer = 60;
     this.timerText = this.add.text(380, 20, this.timer, {
       fontSize: "32px",
       fontStyle: "bold",
