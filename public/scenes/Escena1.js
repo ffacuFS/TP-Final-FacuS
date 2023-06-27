@@ -114,13 +114,13 @@ export default class Escena1 extends Phaser.Scene {
     });
 
     this.scoreM = 0;
-    this.scoreTextM = this.add.text(20, 20, `🌑: ${this.scoreM}/2`, {
+    this.scoreTextM = this.add.text(20, 20, `🌑: ${this.scoreM}/4`, {
       fontSize: "24px",
       fontStyle: "bold",
       fill: "#FFFFFF",
     });
     this.scoreE = 0;
-    this.scoreTextE = this.add.text(20, 50, `⭐: ${this.scoreE}/2`, {
+    this.scoreTextE = this.add.text(20, 50, `⭐: ${this.scoreE}/4`, {
       fontSize: "24px",
       fontStyle: "bold",
       fill: "#FFFFFF",
@@ -167,7 +167,7 @@ export default class Escena1 extends Phaser.Scene {
   
   update() {
     // si los dos marcadores son mayores a 2, se gana el juego
-    if (this.scoreM >= 2 && this.scoreE >= 2) {
+    if (this.scoreM >= 4 && this.scoreE >= 4) {
       this.scene.start("victoria");
     }
 
@@ -273,8 +273,8 @@ export default class Escena1 extends Phaser.Scene {
   }
 
   updateScoreText() {
-    this.scoreTextM.setText(`🌑: ${this.scoreM}/2`);
-    this.scoreTextE.setText(`⭐: ${this.scoreE}/2`);
+    this.scoreTextM.setText(`🌑: ${this.scoreM}/4`);
+    this.scoreTextE.setText(`⭐: ${this.scoreE}/4`);
   }
 
   handleCollision(jugador, shape) {

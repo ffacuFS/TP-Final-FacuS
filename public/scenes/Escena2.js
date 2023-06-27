@@ -108,7 +108,7 @@ export default class Escena2 extends Phaser.Scene {
       fill: "#FFFFFF",
     });
 
-    this.timer = 35;
+    this.timer = 40;
     this.timerText = this.add.text(380, 20, this.timer, {
       fontSize: "32px",
       fontStyle: "bold",
@@ -116,13 +116,13 @@ export default class Escena2 extends Phaser.Scene {
     });
 
     this.scoreM = 0;
-    this.scoreTextM = this.add.text(20, 20, `🌑: ${this.scoreM}/2`, {
+    this.scoreTextM = this.add.text(20, 20, `🌑: ${this.scoreM}/6`, {
       fontSize: "24px",
       fontStyle: "bold",
       fill: "#FFFFFF",
     });
     this.scoreE = 0;
-    this.scoreTextE = this.add.text(20, 50, `⭐: ${this.scoreE}/2`, {
+    this.scoreTextE = this.add.text(20, 50, `⭐: ${this.scoreE}/6`, {
       fontSize: "24px",
       fontStyle: "bold",
       fill: "#FFFFFF",
@@ -175,7 +175,7 @@ export default class Escena2 extends Phaser.Scene {
 
   update() {
     // si los dos marcadores son mayores a 2, se gana el juego
-    if (this.scoreM >= 2 && this.scoreE >= 2) {
+    if (this.scoreM >= 6 && this.scoreE >= 6) {
       this.scene.start("fin");
     }
     if (this.scoreS === 3){
@@ -287,8 +287,8 @@ export default class Escena2 extends Phaser.Scene {
   }
 
   updateScoreText() {
-    this.scoreTextM.setText(`🌑: ${this.scoreM}/2`);
-    this.scoreTextE.setText(`⭐: ${this.scoreE}/2`);
+    this.scoreTextM.setText(`🌑: ${this.scoreM}/6`);
+    this.scoreTextE.setText(`⭐: ${this.scoreE}/6`);
     this.scoreTextS.setText(`🛰️: ${this.scoreS}/3`);
   }
 
