@@ -3,7 +3,6 @@ export default class Escena2 extends Phaser.Scene {
     // key of the scene
     // the key will be used to start the scene by other scenes
     super("escena2");
-    this.vidas = 3;
   }
 
   init() {
@@ -12,6 +11,9 @@ export default class Escena2 extends Phaser.Scene {
     // take data passed from other scenes
     // data object param {}
     this.defeat = false;
+    this.timerPaused = false;
+    this.vidas = 3;
+
   }
 
   preload() {
@@ -21,8 +23,29 @@ export default class Escena2 extends Phaser.Scene {
     this.load.image("meteorito", "./public/images/Meteorito.png");
     this.load.image("estrella", "./public/images/estrella.png");
     this.load.image("laser", "./public/images/laser.png");
-    this.load.image("satelite","./public/images/satelite.png")
-  }
+    this.load.image("satelite","./public/images/satelite.png");
+    this.load.image("pantpausa","./public/images/pantallapausa.png");
+    this.load.image("continuar","./public/images/btn_continuar.png");
+    this.load.image("btnreiniciar","./public/images/btnreinicar.png");
+    this.load.image("btnpausa","./public/images/btnpausa.png");
+    this.load.spritesheet("navederecha","./public/images/nave-derecha82x82.png", {
+      frameWidth: 82,
+      frameHeight: 82
+    });
+    this.load.spritesheet("naveizquierda","./public/images/nave-izquierda82x82.png",{
+      frameWidth: 82,
+      frameHeight: 82
+    });
+    this.load.spritesheet("navesalto","./public/images/navesalto-sheet82x82.png",{
+      frameWidth: 82,
+      frameHeight: 82
+    });
+    this.load.spritesheet("explosion","./public/images/explosion-sheet82x82.png",{
+      frameHeight:82,
+      frameWidth:82
+    });
+    }
+
 
   create() {
     // create game objects
@@ -34,14 +57,14 @@ export default class Escena2 extends Phaser.Scene {
     this.shapesGroup = this.physics.add.group();
 
     this.jugador = this.physics.add
-      .sprite(500, 400, "nave");
+      .sprite(400, 500, "nave");
     this.jugador.setBounce(0.1);
     this.jugador.setCollideWorldBounds(false);
 
     this.physics.add.collider(
       this.shapesGroup,
       this.laserGroup,
-      this.collectShape
+      this.collectShape.bind(this)
     );
 
     this.physics.add.collider(
@@ -63,6 +86,12 @@ export default class Escena2 extends Phaser.Scene {
     });
 
     this.time.addEvent({
+      delay: 1000,
+      callback: this.onSecond,
+      callbackScope: this,
+      loop: true,
+    });
+    this.timerEvent = this.time.addEvent({
       delay: 1000,
       callback: this.onSecond,
       callbackScope: this,
@@ -106,9 +135,34 @@ export default class Escena2 extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
 
-    this.input.keyboard.on("keydown-ESC", () => {
-      this.scene.pause("escena2");
-      this.scene.launch('PantallaPausa', { sceneToResume: 'Escena2' });
+    this.btnPausa = this.add.sprite(750, 50, "btnpausa").setInteractive().setScale(0.8);
+    this.btnPausa.setDepth(4);
+    this.btnPausa.on("pointerdown", () => this.pausarjuego(), this)
+
+    this.anims.create({
+      key: "nave_right",
+      frames: this.anims.generateFrameNumbers("navederecha", { start: 1, end: 3 }),
+      frameRate: 10,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "nave_left",
+      frames: this.anims.generateFrameNumbers("naveizquierda", {start:1, end:3 }),
+      frameRate: 10,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "nave_up",
+      frames: this.anims.generateFrameNumbers("navesalto", {start:1, end:3 }),
+      frameRate: 10,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "explosion_anim",
+      frames: this.anims.generateFrameNumbers("explosion", { start: 1, end: 3 }),
+      frameRate: 10,
+      repeat: 0, 
+      hideOnComplete: true
     });
   }
 
@@ -127,15 +181,27 @@ export default class Escena2 extends Phaser.Scene {
     
     // update game objects
     if (this.cursors.left.isDown) {
-      this.jugador.setVelocityX(-200);
+      this.jugador.setVelocityX(-250);
     } else if (this.cursors.right.isDown) {
-      this.jugador.setVelocityX(200);
+      this.jugador.setVelocityX(250);
     } else {
       this.jugador.setVelocityX(0);
     }
-    if (this.cursors.up.isDown) this.jugador.setVelocityY(-200);
-    if (this.cursors.down.isDown) {
+    if (this.cursors.up.isDown){
+     this.jugador.setVelocityY(-250);
+    } else if (this.cursors.down.isDown) {
       this.jugador.setVelocityY(160);
+    } else {
+      this.jugador.setVelocityY(0);
+    }
+    if (this.cursors.up.isDown) {
+      this.jugador.anims.play("nave_up", true);
+    } else if (this.cursors.left.isDown) {
+      this.jugador.anims.play("nave_left", true);
+    } else if (this.cursors.right.isDown) {
+      this.jugador.anims.play("nave_right", true);
+    } else {
+      this.jugador.anims.stop(true); // Detiene la animación cuando no se presiona ninguna tecla
     }
     if (Phaser.Input.Keyboard.JustDown(this.fireButton)) {
       this.shoot();
@@ -151,16 +217,18 @@ export default class Escena2 extends Phaser.Scene {
     shape.setCollideWorldBounds(true);
     shape.body.setAllowGravity(false);
     this.shapesGroup.add(shape);
-    shape.body.setGravityY(-150);
+    shape.body.setGravityY(100);
 
     //console.log("shape is added", randomX, randomShape);
   }
 
   onSecond() {
-    this.timer--;
-    this.timerText.setText(this.timer);
-    if (this.timer == 0) {
-      this.defeat = true;
+    if (!this.timerPaused) {
+      this.timer--;
+      this.timerText.setText(this.timer);
+      if (this.timer === 0) {
+        this.defeat = true;
+      }
     }
   }
 
@@ -219,7 +287,8 @@ export default class Escena2 extends Phaser.Scene {
   handleCollision(jugador, shape) {
     shape.destroy();
     this.vidas--;
-
+    const explosion = this.add.sprite(jugador.x, jugador.y, "explosion");
+    explosion.play("explosion_anim");
     // Actualizar el texto de las vidas
     this.vidasText.setText(`❤️: ${this.vidas}/3`);
 
@@ -234,6 +303,50 @@ export default class Escena2 extends Phaser.Scene {
     // Aquí puedes realizar acciones cuando el jugador pierda todas las vidas.
     // Puedes reiniciar el juego, mostrar un mensaje de game over, etc.
     this.scene.start("derrota") // Por ejemplo, iniciar la escena de derrota.
+  }
+  pausarjuego() {
+    // Create the "Continuar" button
+    this.reanudar = this.add.sprite(409, 320, "continuar").setScale(2);
+    this.reanudar.setInteractive();
+    this.reanudar.on("pointerdown", () => this.reanudarJuego(), this);
+    this.reanudar.setDepth(4);
+    this.reanudar.setVisible(true).setActive(true);
+  
+    // Create the "Reiniciar" button
+    this.reiniciar = this.add.sprite(409, 376, "btnreiniciar").setScale(2);
+    this.reiniciar.setInteractive();
+    this.reiniciar.on("pointerdown", () => this.reiniciarJuego(), this);
+    this.reiniciar.setDepth(4);
+    this.reiniciar.setVisible(true).setActive(true);
+  
+    // Create the pause overlay
+    this.pantallaPausa = this.add.image(400, 300, "pantpausa").setVisible(true).setScale(2);
+    this.pantallaPausa.setDepth(3);
+  
+    // Pause the game and bring the pause overlay to the top
+    this.physics.pause();
+    this.timerPaused = true;
+    this.scene.bringToTop();
+    
+    this.pausado = true;
+  }
+  
+  reanudarJuego() {
+    // Remove the pause elements
+    this.reanudar.destroy();
+    this.reiniciar.destroy();
+    this.pantallaPausa.setVisible(false);
+  
+    // Resume the game
+    this.physics.resume();
+    this.timerPaused = false;
+    this.pausado = false;
+  }
+  
+  reiniciarJuego() {
+    // Restart the scene
+    this.scene.restart();
+    this.pausado = false;
   }
 }
 

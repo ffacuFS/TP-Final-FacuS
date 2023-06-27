@@ -3,17 +3,17 @@ export default class SelecNivel extends Phaser.Scene {
         super("selecnivel")
     }
 preload()   {
-
+    this.load.image("selecnivel","./public/images/selecnivel.jpg")
     // Precarga de los recursos necesarios, como imágenes y sonidos
-    this.load.image('level1Button', 'ruta/a/imagen/level1.png');
-    this.load.image('level2Button', 'ruta/a/imagen/level2.png');
+    this.load.image('level1Button', './public/images/boton1.png');
+    this.load.image('level2Button', './public/images/boton2.png');
 }
 
 create()    {
-
+    this.add.image(400,300,"selecnivel");
     // Creación de los botones de selección de nivel
-    var level1Button = this.add.image(200, 200, 'level1Button').setInteractive();
-    var level2Button = this.add.image(400, 200, 'level2Button').setInteractive();
+    var level1Button = this.add.image(276, 322, 'level1Button').setInteractive();
+    var level2Button = this.add.image(550, 322, 'level2Button').setInteractive();
 
     // Asignación de eventos a los botones
     level1Button.on('pointerup', function () {

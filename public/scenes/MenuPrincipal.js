@@ -24,12 +24,7 @@ export default class MenuPrincipal extends Phaser.Scene {
       this.scene.start('selecnivel'); // Starts the 'escena1' scene when the image is clicked
     });
 
-    this.add.text(180, 400, "¡¡Click en la pantalla para comenzar!!", {
-      fontSize: "20px",
-      fontStyle: "bold",
-      fill: "#FFFFFF"
-    });
-    this.add.image(390,200,"logo").setScale();
+    this.add.image(390,270,"logo").setScale();
     
     // Adds text to the scene at position (200, 300) with the specified style
   }
