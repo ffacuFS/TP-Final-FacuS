@@ -13,6 +13,7 @@ export default class Escena2 extends Phaser.Scene {
     this.defeat = false;
     this.timerPaused = false;
     this.vidas = 3;
+    this.shootSound = null;
 
   }
 
@@ -28,6 +29,9 @@ export default class Escena2 extends Phaser.Scene {
     this.load.image("continuar","./public/images/btn_continuar.png");
     this.load.image("btnreiniciar","./public/images/btnreinicar.png");
     this.load.image("btnpausa","./public/images/btnpausa.png");
+    this.load.audio("sonidodisparo","./public/sounds/laser4.wav", {
+      instances: 1
+    });
     this.load.spritesheet("navederecha","./public/images/nave-derecha82x82.png", {
       frameWidth: 82,
       frameHeight: 82
@@ -79,7 +83,7 @@ export default class Escena2 extends Phaser.Scene {
     // Le resta una vida ??
 
     this.time.addEvent({
-      delay: 2000,
+      delay: 1000,
       callback: this.addShape,
       callbackScope: this,
       loop: true,
@@ -164,6 +168,9 @@ export default class Escena2 extends Phaser.Scene {
       repeat: 0, 
       hideOnComplete: true
     });
+
+    this.sound.mute = false;
+    this.sonidoDisparo = this.sound.add("sonidodisparo");
   }
 
   update() {
@@ -257,7 +264,8 @@ export default class Escena2 extends Phaser.Scene {
       null,
       this
     );
-
+    this.sonidoDisparo.play();
+ 
     // agregar colisiones a los bordes para eliminar el laser
   }
 
