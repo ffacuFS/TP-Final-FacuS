@@ -17,19 +17,19 @@ export default class Fin extends Phaser.Scene {
     fontStyle: "oblique",
     fill: "#FFFFFF",
     });
-    this.add.text(70,200,"Has superado las misiones y logrado salvar al mundo de una catàstrofe",{
+    this.add.text(70,250,"Has superado las misiones y logrado salvar al mundo de una catàstrofe",{
     fontSize: "16px",
     fontStyle: "bold",
     fill: "#FFFFFF",
   });
 
-    this.add.text(110,300,"Esperamos verte mas adelante con las nuevas actualizaciones",{
+    this.add.text(110,320,"Esperamos verte mas adelante con las nuevas actualizaciones",{
     fontSize: "16px",
     fontStyle: "bold",
     fill: "#FFFFFF",
     });
 
-    this.add.text(280,500,"SALUDOS CAMARADA",{
+    this.add.text(280,530,"SALUDOS CAMARADA",{
     fontSize: "24px",
     fontStyle: "bold",
     fill: "#FFFFFF",

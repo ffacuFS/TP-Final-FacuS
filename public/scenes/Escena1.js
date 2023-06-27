@@ -126,7 +126,7 @@ export default class Escena1 extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
 
-    this.btnPausa = this.add.sprite(750, 50, "btnpausa").setInteractive();
+    this.btnPausa = this.add.sprite(750, 50, "btnpausa").setInteractive().setScale(0.6);
     this.btnPausa.setDepth(4);
     this.btnPausa.on("pointerdown", () => this.pausarjuego(), this)
 
