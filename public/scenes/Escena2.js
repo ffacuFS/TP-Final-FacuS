@@ -14,7 +14,7 @@ export default class Escena2 extends Phaser.Scene {
     this.timerPaused = false;
     this.vidas = 3;
     this.shootSound = null;
-
+   
   }
 
   preload() {
@@ -83,18 +83,12 @@ export default class Escena2 extends Phaser.Scene {
     // Le resta una vida ??
 
     this.time.addEvent({
-      delay: 1000,
+      delay: 1500,
       callback: this.addShape,
       callbackScope: this,
       loop: true,
     });
 
-    this.time.addEvent({
-      delay: 1000,
-      callback: this.onSecond,
-      callbackScope: this,
-      loop: true,
-    });
     this.timerEvent = this.time.addEvent({
       delay: 1000,
       callback: this.onSecond,
@@ -171,7 +165,9 @@ export default class Escena2 extends Phaser.Scene {
 
     this.sound.mute = false;
     this.sonidoDisparo = this.sound.add("sonidodisparo");
+
   }
+    
 
   update() {
     // si los dos marcadores son mayores a 2, se gana el juego
@@ -220,7 +216,7 @@ export default class Escena2 extends Phaser.Scene {
     const randomShape = Phaser.Math.RND.pick(["meteorito", "estrella","satelite"]);
     const randomX = Phaser.Math.Between(0, 800);
 
-    const shape = this.physics.add.image(randomX, 0, randomShape).setScale(1.5);
+    const shape = this.physics.add.image(randomX, 0, randomShape).setScale(0.8);
     shape.setCollideWorldBounds(true);
     shape.body.setAllowGravity(false);
     this.shapesGroup.add(shape);
@@ -357,4 +353,5 @@ export default class Escena2 extends Phaser.Scene {
     this.pausado = false;
   }
 }
+
 

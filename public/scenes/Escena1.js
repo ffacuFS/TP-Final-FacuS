@@ -54,6 +54,7 @@ export default class Escena1 extends Phaser.Scene {
     this.add.image("meteorito");
     this.add.image("estrella");
 
+    
     this.shapesGroup = this.physics.add.group();
 
     this.jugador = this.physics.add
@@ -80,18 +81,12 @@ export default class Escena1 extends Phaser.Scene {
     // Le resta una vida ??
 
     this.time.addEvent({
-      delay: 1000,
+      delay: 1500,
       callback: this.addShape,
       callbackScope: this,
       loop: true,
     });
 
-    this.time.addEvent({
-      delay: 1000,
-      callback: this.onSecond,
-      callbackScope: this,
-      loop: true,
-    });
     this.timerEvent = this.time.addEvent({
       delay: 1000,
       callback: this.onSecond,
@@ -106,7 +101,7 @@ export default class Escena1 extends Phaser.Scene {
       fill: "#FFFFFF",
     });
 
-    this.timer = 30;
+    this.timer = 35;
     this.timerText = this.add.text(380, 20, this.timer, {
       fontSize: "32px",
       fontStyle: "bold",
@@ -209,7 +204,7 @@ export default class Escena1 extends Phaser.Scene {
     const randomShape = Phaser.Math.RND.pick(["meteorito", "estrella"]);
     const randomX = Phaser.Math.Between(0, 800);
 
-    const shape = this.physics.add.image(randomX, 0, randomShape).setScale(1.5);
+    const shape = this.physics.add.image(randomX, 0, randomShape).setScale(0.8);
     shape.setCollideWorldBounds(true);
     shape.body.setAllowGravity(false);
     this.shapesGroup.add(shape);
@@ -344,4 +339,5 @@ export default class Escena1 extends Phaser.Scene {
     this.scene.restart();
     this.pausado = false;
   }
+  
 }
