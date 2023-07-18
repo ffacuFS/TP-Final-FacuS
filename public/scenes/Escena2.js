@@ -79,8 +79,6 @@ export default class Escena2 extends Phaser.Scene {
       this
     );
 
-    // Falta agregar colision del jugador con el mundo
-    // Le resta una vida ??
 
     this.time.addEvent({
       delay: 1500,
@@ -170,7 +168,6 @@ export default class Escena2 extends Phaser.Scene {
     
 
   update() {
-    // si los dos marcadores son mayores a 2, se gana el juego
     if (this.scoreM >= 6 && this.scoreE >= 6) {
       this.scene.start("fin");
     }
@@ -182,7 +179,6 @@ export default class Escena2 extends Phaser.Scene {
       this.scene.start("derrota");
     }
     
-    // update game objects
     if (this.cursors.left.isDown) {
       this.jugador.setVelocityX(-250);
     } else if (this.cursors.right.isDown) {
@@ -204,7 +200,7 @@ export default class Escena2 extends Phaser.Scene {
     } else if (this.cursors.right.isDown) {
       this.jugador.anims.play("nave_right", true);
     } else {
-      this.jugador.anims.stop(true); // Detiene la animación cuando no se presiona ninguna tecla
+      this.jugador.anims.stop(true); 
     }
     if (Phaser.Input.Keyboard.JustDown(this.fireButton)) {
       this.shoot();
@@ -222,7 +218,6 @@ export default class Escena2 extends Phaser.Scene {
     this.shapesGroup.add(shape);
     shape.body.setGravityY(100);
 
-    //console.log("shape is added", randomX, randomShape);
   }
 
   onSecond() {
@@ -249,10 +244,9 @@ export default class Escena2 extends Phaser.Scene {
     laser.body.onWorldBounds = true;
     this.physics.world.on("worldbounds", (body) => {
       if (body.gameObject === laser) {
-        laser.destroy(); // Remove the laser when it collides with the world boundaries
+        laser.destroy(); 
       }
     }, this);
-    // Configurar colisiones
     this.physics.add.collider(
       laser,
       this.shapesGroup,
@@ -262,7 +256,6 @@ export default class Escena2 extends Phaser.Scene {
     );
     this.sonidoDisparo.play();
  
-    // agregar colisiones a los bordes para eliminar el laser
   }
 
   collectShape(laser, shape) {
@@ -293,41 +286,32 @@ export default class Escena2 extends Phaser.Scene {
     this.vidas--;
     const explosion = this.add.sprite(jugador.x, jugador.y, "explosion");
     explosion.play("explosion_anim");
-    // Actualizar el texto de las vidas
     this.vidasText.setText(`❤️: ${this.vidas}/3`);
 
     if (this.vidas <= 0) {
-      // Si se quedan sin vidas, puedes hacer algo aquí, como llamar a una función de Game Over.
-      // Por ejemplo:
       this.gameOver();
     }
   }
 
   gameOver() {
-    // Aquí puedes realizar acciones cuando el jugador pierda todas las vidas.
-    // Puedes reiniciar el juego, mostrar un mensaje de game over, etc.
-    this.scene.start("derrota") // Por ejemplo, iniciar la escena de derrota.
+    this.scene.start("derrota") 
   }
   pausarjuego() {
-    // Create the "Continuar" button
     this.reanudar = this.add.sprite(409, 320, "continuar").setScale(2);
     this.reanudar.setInteractive();
     this.reanudar.on("pointerdown", () => this.reanudarJuego(), this);
     this.reanudar.setDepth(4);
     this.reanudar.setVisible(true).setActive(true);
   
-    // Create the "Reiniciar" button
     this.reiniciar = this.add.sprite(409, 376, "btnreiniciar").setScale(2);
     this.reiniciar.setInteractive();
     this.reiniciar.on("pointerdown", () => this.reiniciarJuego(), this);
     this.reiniciar.setDepth(4);
     this.reiniciar.setVisible(true).setActive(true);
   
-    // Create the pause overlay
     this.pantallaPausa = this.add.image(400, 300, "pantpausa").setVisible(true).setScale(2);
     this.pantallaPausa.setDepth(3);
   
-    // Pause the game and bring the pause overlay to the top
     this.physics.pause();
     this.timerPaused = true;
     this.scene.bringToTop();
@@ -336,19 +320,16 @@ export default class Escena2 extends Phaser.Scene {
   }
   
   reanudarJuego() {
-    // Remove the pause elements
     this.reanudar.destroy();
     this.reiniciar.destroy();
     this.pantallaPausa.setVisible(false);
   
-    // Resume the game
     this.physics.resume();
     this.timerPaused = false;
     this.pausado = false;
   }
   
   reiniciarJuego() {
-    // Restart the scene
     this.scene.restart();
     this.pausado = false;
   }
