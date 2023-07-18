@@ -63,7 +63,7 @@ export default class Escena2 extends Phaser.Scene {
     this.jugador = this.physics.add
       .sprite(400, 500, "nave");
     this.jugador.setBounce(0.1);
-    this.jugador.setCollideWorldBounds(false);
+    this.jugador.setCollideWorldBounds(true);
 
     this.physics.add.collider(
       this.shapesGroup,
